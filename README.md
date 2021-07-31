@@ -186,4 +186,112 @@ public class Queue {
 
 ```
 
+**CIRCULAR QUEUE**
+
+```
+
+public class CircularQueue {
+	
+	int[] arr;
+	int front, rear;
+	int capacity;
+	
+	public CircularQueue(int size) {
+		arr = new int[size];
+		front = -1;
+		rear = -1;
+		capacity = size;
+	}
+	
+	public void enQueue(int x) {
+		if(isFull()) {
+			System.out.println("Queue is full");
+		}else {
+			if(front == -1) 
+				front = 0;
+			// for circular
+			rear = (rear + 1) % capacity;
+			arr[rear] = x;
+			System.out.println("inseted : " + x);
+		}
+	}
+	
+	public int deQueue() {
+		int y;
+		if(isEmpty()) {
+			System.out.println("Queue is empty");
+			return -1;
+		}else {
+			y = arr[front];
+			if(front == rear) {
+				front = -1;
+				rear = -1;
+			}else {
+				// for circular
+				front = (front + 1) % capacity;
+			}
+			System.out.println("deleted : " + y);
+			return y;
+		}
+	}
+	
+	public boolean isFull() {
+		// if front postiong is 0 and the queue is full so rear is the last element position : size - 1
+		if(front == 0 && rear == capacity -1)
+			return true;
+		// if rear starts from the beginning again and front is one step ahead from the rear
+		if(front == rear + 1) 
+			return true;
+		return false;
+	}
+
+	public boolean isEmpty() {
+		if(front == -1)
+			return true;
+		return false;
+	}
+	
+	public void display() {
+		int i = 0;
+		if(isEmpty())
+			System.out.println("Queue is empty");
+		else
+			for(i = front; i != rear; i = (i + 1) % capacity)
+				System.out.println("item : " + arr[i]);
+			System.out.println("item : " + arr[i]);
+			System.out.println("rear -> " + rear);
+	}
+	
+	public static void main(String[] args) {
+		
+		CircularQueue circular = new CircularQueue(5);
+		
+		// no element in queue
+		circular.deQueue();
+		
+		//enqueue 
+		circular.enQueue(1);
+		circular.enQueue(2);
+		circular.enQueue(3);
+		circular.enQueue(4);
+		circular.enQueue(5);
+		
+		//display
+		circular.display();
+		
+		//dequeue
+		circular.deQueue();
+		
+		circular.display();
+		//enqueue
+		circular.enQueue(6);
+		
+		//display
+		circular.display();
+	}
+}
+
+```
+
+
 
