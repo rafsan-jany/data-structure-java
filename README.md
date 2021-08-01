@@ -293,5 +293,133 @@ public class CircularQueue {
 
 ```
 
+**LINKED LIST**
 
+```
+public class LinkedList {
+	//head of the list
+	Node head;
+	
+	//linked list node
+	static class Node{
+		int value;
+		Node next;
+		
+		Node(int d){
+			value = d;
+			next = null;
+		}
+	}
+	
+	//insert at the beginning 
+	public void insertAtBeginning(int newData) {
+		// initialize new node
+		Node newNode = new Node(newData);
+		//new node points to the head 
+		newNode.next = head;
+		// head becomes the newNode as now newNode is the first node
+		head = newNode;
+	}
+	
+	//insert after a node
+	public void insertAfter(Node prevNode, int newData) {
+		if(prevNode == null) {
+			System.out.println("The given previous node cannot be null");
+			return;
+		}
+		//initialize new node
+		Node newNode = new Node(newData);
+		//newNode points the next of the given prevNode
+		newNode.next = prevNode.next;
+		//prevNode points the newNode as it is entered right after the prevNode
+		prevNode.next = newNode;
+	}
+	
+	//insert at the end
+	public void insertAtEnd(int newData) {
+		Node newNode = new Node(newData);
+		
+		// if list is empty
+		if(head == null) {
+			// new node is the first node as head
+			head = new Node(newData);
+			return;
+		}
+		
+		//newNode is the last node so newNode.next is null 
+		newNode.next = null;
+		
+		Node last = head;
+		while(last.next != null) 
+			last = last.next;
+		
+		last.next = newNode;
+		return;
+	}
+	
+	//delete a node
+	void deleteNode(int position) {
+		//head == null means linked list is empty
+		if(head == null)
+			return;
+		//store head node
+		Node temp = head;
+		
+		//head removed
+		if(position == 0) {
+			//set new head
+			head = temp.next;
+			return;
+		}
+		
+		//17->21->32->41->55 list
+		//0- 1- 2- 3- 4 position
+		//if we want to delete position 4, means 55, we need to select position 3 which value is 32
+		// we need to run loop for 2 because temp.next point 21 when i = 0
+		//find the previous node of the node to be deleted
+		for(int i = 0; temp != null && i < position -1; i++)
+			temp = temp.next;
+		
+		//if position is more than number of nodes
+		if(temp == null || temp.next == null)
+			return;
+		
+		// temp.next is the node to be deleted
+		//temp.next.next is the node which is the next node of the deleted node
+		Node next = temp.next.next;
+		
+		//set the temp.next to the next node of the deleted node
+		// means unlink the deleted node from the list
+		temp.next = next;
+	}
+	
+	//print the linked list
+	public void printList() {
+		Node tnode = head;
+		while(tnode != null) {
+			System.out.println(tnode.value);
+			tnode = tnode.next;
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		LinkedList llist = new LinkedList();
+		
+	    llist.insertAtEnd(1);
+	    llist.insertAtBeginning(2);
+	    llist.insertAtBeginning(3);
+	    llist.insertAtEnd(4);
+	    llist.insertAfter(llist.head.next, 5);
+
+	    System.out.println("Linked list: ");
+	    llist.printList();
+
+	    System.out.println("\nAfter deleting an element: ");
+	    llist.deleteNode(3);
+	    llist.printList();	
+	}
+}
+
+```
 
